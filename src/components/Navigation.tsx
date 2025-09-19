@@ -9,7 +9,8 @@ import {
   Building, 
   AlertTriangle,
   Menu,
-  X
+  X,
+  UserCheck
 } from 'lucide-react';
 
 interface NavigationProps {
@@ -29,6 +30,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
     { id: 'analytics', label: 'Predictive Analytics', icon: TrendingUp },
     { id: 'airport', label: 'Airport Management', icon: Building },
     { id: 'emergency', label: 'Emergency Response', icon: AlertTriangle },
+    { id: 'users', label: 'User Management', icon: UserCheck },
   ];
 
   return (

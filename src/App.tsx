@@ -8,6 +8,7 @@ import ADSBTracking from './components/ADSBTracking';
 import PredictiveAnalytics from './components/PredictiveAnalytics';
 import AirportManagement from './components/AirportManagement';
 import EmergencyResponse from './components/EmergencyResponse';
+import UserManagement from './components/UserManagement';
 
 function App() {
   const [activeTab, setActiveTab] = useState('operations');
@@ -30,6 +31,8 @@ function App() {
         return <AirportManagement />;
       case 'emergency':
         return <EmergencyResponse />;
+      case 'users':
+        return <UserManagement />;
       default:
         return <FlightOperations />;
     }
