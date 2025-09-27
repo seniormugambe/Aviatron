@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-soft border border-slate-200/60 transition-all duration-200;
+  }
+  
+  .card:hover {
+    @apply shadow-medium border-slate-300/60;
+  }
+  
+  .metric-card {
+    @apply card p-6 relative overflow-hidden;
+  }
+  
+  .metric-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-aviation-500 to-accent-500;
+  }
+  
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200;
+  }
+  
+  .btn-primary {
+    @apply bg-aviation-600 hover:bg-aviation-700 text-white font-medium px-6 py-3 rounded-lg transition-all duration-200 shadow-soft hover:shadow-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-slate-50 text-slate-700 font-medium px-6 py-3 rounded-lg border border-slate-300 transition-all duration-200 shadow-soft hover:shadow-medium;
+  }
+  
+  .data-table {
+    @apply w-full border-collapse;
+  }
+  
+  .data-table th {
+    @apply text-left py-4 px-6 font-semibold text-slate-700 border-b border-slate-200 bg-slate-50/50;
+  }
+  
+  .data-table td {
+    @apply py-4 px-6 border-b border-slate-100;
+  }
+  
+  .data-table tr:hover {
+    @apply bg-slate-50/50;
+  }
+}

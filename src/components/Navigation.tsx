@@ -34,20 +34,32 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
   ];
 
   return (
-    <nav className="bg-slate-900 text-white shadow-lg">
+    <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-strong backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-3">
-            <Plane className="h-8 w-8 text-blue-400" />
-            <h1 className="text-xl font-bold">Smart Aviation Platform</h1>
-            <span className="bg-blue-600 text-xs px-2 py-1 rounded-full">Uganda</span>
+        <div className="flex items-center justify-between h-18">
+          <div className="flex items-center space-x-4">
+            <div className="relative">
+              <Plane className="h-9 w-9 text-aviation-400 transform rotate-45" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-success-500 rounded-full animate-pulse-soft"></div>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-white to-aviation-200 bg-clip-text text-transparent">
+                Smart Aviation Platform
+              </h1>
+              <div className="flex items-center space-x-2 mt-0.5">
+                <span className="bg-gradient-to-r from-accent-500 to-accent-600 text-white text-xs px-3 py-1 rounded-full font-medium shadow-soft">
+                  Uganda
+                </span>
+                <span className="text-xs text-slate-400">v2.1</span>
+              </div>
+            </div>
           </div>
           
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:text-blue-400 transition-colors"
+              className="text-white hover:text-aviation-400 transition-all duration-200 p-2 rounded-lg hover:bg-slate-800"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -55,22 +67,25 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:block border-t border-slate-700">
-          <div className="flex space-x-8 overflow-x-auto py-3">
+        <div className="hidden md:block border-t border-slate-700/50">
+          <div className="flex space-x-2 overflow-x-auto py-4">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+                  className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap relative group ${
                     activeTab === item.id
-                      ? 'bg-blue-700 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-slate-700'
+                      ? 'bg-aviation-600 text-white shadow-medium'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className={`h-4 w-4 transition-transform duration-200 ${activeTab === item.id ? 'scale-110' : 'group-hover:scale-105'}`} />
                   <span>{item.label}</span>
+                  {activeTab === item.id && (
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-accent-400 rounded-full"></div>
+                  )}
                 </button>
               );
             })}
@@ -79,8 +94,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-slate-700">
-            <div className="py-2 space-y-1">
+          <div className="md:hidden border-t border-slate-700/50 animate-slide-up">
+            <div className="py-3 space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -90,10 +105,10 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                       onTabChange(item.id);
                       setIsMenuOpen(false);
                     }}
-                    className={`flex items-center space-x-2 w-full px-3 py-2 text-left text-sm font-medium transition-colors ${
+                    className={`flex items-center space-x-3 w-full px-4 py-3 text-left text-sm font-medium transition-all duration-200 rounded-lg mx-2 ${
                       activeTab === item.id
-                        ? 'bg-blue-700 text-white'
-                        : 'text-gray-300 hover:text-white hover:bg-slate-700'
+                        ? 'bg-aviation-600 text-white'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
                     }`}
                   >
                     <Icon className="h-4 w-4" />

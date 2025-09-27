@@ -55,80 +55,119 @@ const FlightOperations: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Flight Operations Dashboard</h2>
+      <div className="card p-8">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Flight Operations Dashboard</h2>
+            <p className="text-slate-600">Real-time monitoring and management of flight operations</p>
+          </div>
+          <div className="flex items-center space-x-2 text-sm text-slate-500">
+            <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse-soft"></div>
+            <span>Live Data</span>
+          </div>
+        </div>
         
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-blue-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+          <div className="metric-card bg-gradient-to-br from-aviation-50 to-aviation-100">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm font-medium text-blue-600">Active Flights</p>
-                <p className="text-2xl font-bold text-blue-900">24</p>
+                <p className="text-sm font-semibold text-aviation-700 uppercase tracking-wide">Active Flights</p>
+                <p className="text-3xl font-bold text-aviation-900 mt-1">24</p>
               </div>
-              <Plane className="h-8 w-8 text-blue-500" />
+              <div className="p-3 bg-aviation-500 rounded-xl shadow-medium">
+                <Plane className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="flex items-center text-sm text-aviation-600">
+              <span className="text-success-600 font-medium">+3</span>
+              <span className="ml-1">from yesterday</span>
             </div>
           </div>
-          <div className="bg-green-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
+          <div className="metric-card bg-gradient-to-br from-success-50 to-success-100">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm font-medium text-green-600">On-Time Rate</p>
-                <p className="text-2xl font-bold text-green-900">92%</p>
+                <p className="text-sm font-semibold text-success-700 uppercase tracking-wide">On-Time Rate</p>
+                <p className="text-3xl font-bold text-success-900 mt-1">92%</p>
               </div>
-              <CheckCircle className="h-8 w-8 text-green-500" />
+              <div className="p-3 bg-success-500 rounded-xl shadow-medium">
+                <CheckCircle className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="flex items-center text-sm text-success-600">
+              <span className="text-success-600 font-medium">+2%</span>
+              <span className="ml-1">this month</span>
             </div>
           </div>
-          <div className="bg-orange-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
+          <div className="metric-card bg-gradient-to-br from-accent-50 to-accent-100">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm font-medium text-orange-600">Passengers Today</p>
-                <p className="text-2xl font-bold text-orange-900">3,247</p>
+                <p className="text-sm font-semibold text-accent-700 uppercase tracking-wide">Passengers Today</p>
+                <p className="text-3xl font-bold text-accent-900 mt-1">3,247</p>
               </div>
-              <Users className="h-8 w-8 text-orange-500" />
+              <div className="p-3 bg-accent-500 rounded-xl shadow-medium">
+                <Users className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="flex items-center text-sm text-accent-600">
+              <span className="text-success-600 font-medium">+12%</span>
+              <span className="ml-1">vs last week</span>
             </div>
           </div>
-          <div className="bg-purple-50 rounded-lg p-4">
-            <div className="flex items-center justify-between">
+          <div className="metric-card bg-gradient-to-br from-purple-50 to-purple-100">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-sm font-medium text-purple-600">Revenue Today</p>
-                <p className="text-2xl font-bold text-purple-900">$127K</p>
+                <p className="text-sm font-semibold text-purple-700 uppercase tracking-wide">Revenue Today</p>
+                <p className="text-3xl font-bold text-purple-900 mt-1">$127K</p>
               </div>
-              <MapPin className="h-8 w-8 text-purple-500" />
+              <div className="p-3 bg-purple-500 rounded-xl shadow-medium">
+                <MapPin className="h-6 w-6 text-white" />
+              </div>
+            </div>
+            <div className="flex items-center text-sm text-purple-600">
+              <span className="text-success-600 font-medium">+8%</span>
+              <span className="ml-1">daily average</span>
             </div>
           </div>
         </div>
 
         {/* Flight Schedule */}
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Current Flight Schedule</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full">
+        <div className="card p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-semibold text-slate-900">Current Flight Schedule</h3>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse-soft"></div>
+              <span className="text-sm text-slate-500">Updated 30s ago</span>
+            </div>
+          </div>
+          <div className="overflow-x-auto rounded-lg border border-slate-200">
+            <table className="data-table">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Flight</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Route</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Aircraft</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Status</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Departure</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Passengers</th>
-                  <th className="text-left py-3 px-4 font-semibold text-gray-700">Gate</th>
+                <tr>
+                  <th>Flight</th>
+                  <th>Route</th>
+                  <th>Aircraft</th>
+                  <th>Status</th>
+                  <th>Departure</th>
+                  <th>Passengers</th>
+                  <th>Gate</th>
                 </tr>
               </thead>
               <tbody>
                 {flights.map((flight) => (
-                  <tr key={flight.id} className="border-b border-gray-100 hover:bg-white transition-colors">
-                    <td className="py-4 px-4 font-medium text-gray-900">{flight.id}</td>
-                    <td className="py-4 px-4 text-gray-700">{flight.route}</td>
-                    <td className="py-4 px-4 text-gray-600 text-sm">{flight.aircraft}</td>
+                  <tr key={flight.id} className="transition-colors duration-200">
+                    <td className="font-mono font-semibold text-slate-900">{flight.id}</td>
+                    <td className="text-slate-700 font-medium">{flight.route}</td>
+                    <td className="text-slate-600 text-sm font-mono">{flight.aircraft}</td>
                     <td className="py-4 px-4">
-                      <div className={`inline-flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(flight.status)}`}>
+                      <div className={`status-badge ${getStatusColor(flight.status)}`}>
                         {getStatusIcon(flight.status)}
                         <span>{flight.status}</span>
                       </div>
                     </td>
-                    <td className="py-4 px-4 text-gray-700">{flight.departure}</td>
-                    <td className="py-4 px-4 text-gray-700">{flight.passengers}</td>
-                    <td className="py-4 px-4 text-gray-700">{flight.gate}</td>
+                    <td className="font-mono text-slate-700">{flight.departure}</td>
+                    <td className="text-slate-700 font-medium">{flight.passengers}</td>
+                    <td className="font-mono font-semibold text-aviation-600">{flight.gate}</td>
                   </tr>
                 ))}
               </tbody>
