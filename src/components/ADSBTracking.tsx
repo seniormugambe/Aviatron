@@ -42,7 +42,7 @@ const ADSBTracking: React.FC = () => {
   return (
     <div className="space-y-6">
       <ReactMapGL
-        mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJjazZqb2V4eWowMDAwM29wbnVpbzNlcjdkIn0.example'}
+        mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
         initialViewState={{
           longitude: -0.1276,
           latitude: 51.5074,
