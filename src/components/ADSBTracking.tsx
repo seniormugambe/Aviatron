@@ -41,7 +41,16 @@ const ADSBTracking: React.FC = () => {
   // Update Map component to use ReactMapGL
   return (
     <div className="space-y-6">
-      <ReactMapGL>
+      <ReactMapGL
+        mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJjazZqb2V4eWowMDAwM29wbnVpbzNlcjdkIn0.example'}
+        initialViewState={{
+          longitude: -0.1276,
+          latitude: 51.5074,
+          zoom: 10
+        }}
+        style={{width: '100%', height: '400px'}}
+        mapStyle="mapbox://styles/mapbox/streets-v11"
+      >
         {trackedFlights.map((flight: Flight, index: number) => (
           <Marker
             key={index}
