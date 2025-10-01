@@ -15,7 +15,9 @@ import {
   Activity,
   Clock,
   Shield,
-  Zap
+  Zap,
+  Moon,
+  Sun
 } from 'lucide-react';
 
 interface NavigationProps {
@@ -27,6 +29,26 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null);
   const [dropdownTimeout, setDropdownTimeout] = React.useState<NodeJS.Timeout | null>(null);
+  const [isDarkMode, setIsDarkMode] = React.useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('darkMode') === 'true' || 
+             (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    return false;
+  });
+
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', isDarkMode.toString());
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const navSections = [
     {
@@ -192,6 +214,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
           
           {/* Desktop Current Section Indicator */}
           <div className="hidden lg:flex items-center space-x-4">
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+              title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
             <div className="text-right">
               <div className="text-sm text-slate-300">{getCurrentSection()}</div>
               <div className="text-xs text-slate-400">{getCurrentItem()?.description}</div>
@@ -200,12 +229,21 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
 
           {/* Mobile menu button */}
           <div className="lg:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-white hover:text-aviation-400 transition-all duration-200 p-2 rounded-lg hover:bg-slate-800"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+                title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white hover:text-aviation-400 transition-all duration-200 p-2 rounded-lg hover:bg-slate-800"
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -232,14 +270,14 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                 {/* Dropdown */}
                 {activeDropdown === section.title && (
                   <div 
-                    className="absolute top-full left-0 mt-1 w-80 bg-white rounded-xl shadow-strong border border-slate-200 py-3 z-50 animate-slide-up"
+                    className="absolute top-full left-0 mt-1 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-strong border border-slate-200 dark:border-slate-600 py-3 z-50 animate-slide-up"
                     onMouseEnter={() => handleDropdownEnter(section.title)}
                     onMouseLeave={handleDropdownLeave}
                   >
                     {/* Section Header */}
-                    <div className={`mx-4 mb-3 p-3 rounded-lg ${section.bgColor} border-l-4 border-gradient-to-b ${section.color}`}>
-                      <h4 className={`font-semibold ${section.textColor} text-sm`}>{section.title}</h4>
-                      <p className="text-xs text-slate-600 mt-1">
+                    <div className={`mx-4 mb-3 p-3 rounded-lg ${section.bgColor} dark:bg-slate-700 border-l-4 border-gradient-to-b ${section.color}`}>
+                      <h4 className={`font-semibold ${section.textColor} dark:text-slate-200 text-sm`}>{section.title}</h4>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                         {section.items.length} modules available
                       </p>
                     </div>
@@ -253,13 +291,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                             onTabChange(item.id);
                             setActiveDropdown(null);
                           }}
-                          className={`w-full flex items-start space-x-3 px-4 py-3 text-left hover:bg-gradient-to-r hover:from-slate-50 hover:to-aviation-50 hover:shadow-soft transition-all duration-300 group transform hover:scale-[1.02] hover:translate-x-1 ${
-                            activeTab === item.id ? 'bg-aviation-50 border-r-4 border-aviation-500' : ''
+                          className={`w-full flex items-start space-x-3 px-4 py-3 text-left hover:bg-gradient-to-r hover:from-slate-50 hover:to-aviation-50 dark:hover:from-slate-700 dark:hover:to-slate-600 hover:shadow-soft transition-all duration-300 group transform hover:scale-[1.02] hover:translate-x-1 ${
+                            activeTab === item.id ? 'bg-aviation-50 dark:bg-slate-700 border-r-4 border-aviation-500' : ''
                           }`}
                         >
                           <div className="relative">
                             <Icon className={`h-5 w-5 mt-0.5 transition-colors duration-200 ${
-                              activeTab === item.id ? 'text-aviation-600' : 'text-slate-500 group-hover:text-aviation-600 group-hover:scale-110'
+                              activeTab === item.id ? 'text-aviation-600 dark:text-aviation-400' : 'text-slate-500 dark:text-slate-400 group-hover:text-aviation-600 group-hover:scale-110'
                             }`} />
                             <div className="absolute -top-1 -right-1">
                               {getStatusIndicator(item.status)}
@@ -268,7 +306,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
                               <div className={`font-medium transition-colors duration-200 ${
-                                activeTab === item.id ? 'text-aviation-900' : 'text-slate-900 group-hover:text-aviation-800 group-hover:font-semibold'
+                                activeTab === item.id ? 'text-aviation-900 dark:text-aviation-200' : 'text-slate-900 dark:text-slate-200 group-hover:text-aviation-800 dark:group-hover:text-aviation-300 group-hover:font-semibold'
                               }`}>
                                 {item.label}
                               </div>
@@ -288,13 +326,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                                 </div>
                               )}
                             </div>
-                            <div className="text-xs text-slate-600 mt-0.5 group-hover:text-aviation-700 group-hover:font-medium transition-all duration-200">
+                            <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 group-hover:text-aviation-700 dark:group-hover:text-aviation-300 group-hover:font-medium transition-all duration-200">
                               {item.description}
                             </div>
                             <div className="flex items-center justify-between mt-2">
                               <div className="flex items-center space-x-1">
-                                <Clock className="h-3 w-3 text-slate-400 group-hover:text-aviation-500 transition-colors duration-200" />
-                                <span className="text-xs text-slate-500 group-hover:text-aviation-600 group-hover:font-medium transition-all duration-200">{item.stats}</span>
+                                <Clock className="h-3 w-3 text-slate-400 dark:text-slate-500 group-hover:text-aviation-500 transition-colors duration-200" />
+                                <span className="text-xs text-slate-500 dark:text-slate-400 group-hover:text-aviation-600 dark:group-hover:text-aviation-400 group-hover:font-medium transition-all duration-200">{item.stats}</span>
                               </div>
                               <div className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 group-hover:shadow-soft group-hover:scale-105 ${
                                 item.status === 'operational' 
@@ -312,13 +350,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                     })}
 
                     {/* Quick Actions Footer */}
-                    <div className="mx-4 mt-3 pt-3 border-t border-slate-200 hover:border-aviation-300 transition-colors duration-200">
+                    <div className="mx-4 mt-3 pt-3 border-t border-slate-200 dark:border-slate-600 hover:border-aviation-300 dark:hover:border-aviation-500 transition-colors duration-200">
                       <div className="flex items-center justify-between text-xs">
-                        <div className="flex items-center space-x-2 text-slate-500 hover:text-aviation-600 transition-colors duration-200">
+                        <div className="flex items-center space-x-2 text-slate-500 dark:text-slate-400 hover:text-aviation-600 dark:hover:text-aviation-400 transition-colors duration-200">
                           <Shield className="h-3 w-3" />
                           <span>All systems monitored</span>
                         </div>
-                        <div className="flex items-center space-x-1 text-success-600 hover:text-success-700 transition-colors duration-200">
+                        <div className="flex items-center space-x-1 text-success-600 dark:text-success-400 hover:text-success-700 dark:hover:text-success-300 transition-colors duration-200">
                           <Zap className="h-3 w-3" />
                           <span>Live data</span>
                         </div>
