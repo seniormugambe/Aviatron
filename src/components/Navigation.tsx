@@ -340,7 +340,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                           onTabChange(item.id);
                           setIsMenuOpen(false);
                         }}
-                        className={\`flex items-center space-x-3 w-full px-4 py-3 text-left text-sm transition-all duration-200 rounded-lg mx-2 ${
+                        className={`flex items-center space-x-3 w-full px-4 py-3 text-left text-sm transition-all duration-200 rounded-lg mx-2 ${
                           activeTab === item.id
                             ? 'bg-aviation-600 text-white'
                             : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
