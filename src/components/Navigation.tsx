@@ -322,7 +322,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
           </div>
         </div>
 
-        {\/* Mobile Navigation */}
+        {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-slate-700/50 animate-slide-up">
             <div className="py-3 space-y-1">
