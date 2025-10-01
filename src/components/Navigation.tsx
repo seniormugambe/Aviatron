@@ -253,13 +253,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                             onTabChange(item.id);
                             setActiveDropdown(null);
                           }}
-                          className={`w-full flex items-start space-x-3 px-4 py-3 text-left hover:bg-slate-50 transition-all duration-200 group ${
+                          className={`w-full flex items-start space-x-3 px-4 py-3 text-left hover:bg-gradient-to-r hover:from-slate-50 hover:to-aviation-50 hover:shadow-soft transition-all duration-300 group transform hover:scale-[1.02] hover:translate-x-1 ${
                             activeTab === item.id ? 'bg-aviation-50 border-r-4 border-aviation-500' : ''
                           }`}
                         >
                           <div className="relative">
                             <Icon className={`h-5 w-5 mt-0.5 transition-colors duration-200 ${
-                              activeTab === item.id ? 'text-aviation-600' : 'text-slate-500 group-hover:text-slate-700'
+                              activeTab === item.id ? 'text-aviation-600' : 'text-slate-500 group-hover:text-aviation-600 group-hover:scale-110'
                             }`} />
                             <div className="absolute -top-1 -right-1">
                               {getStatusIndicator(item.status)}
@@ -268,7 +268,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
                               <div className={`font-medium transition-colors duration-200 ${
-                                activeTab === item.id ? 'text-aviation-900' : 'text-slate-900 group-hover:text-slate-800'
+                                activeTab === item.id ? 'text-aviation-900' : 'text-slate-900 group-hover:text-aviation-800 group-hover:font-semibold'
                               }`}>
                                 {item.label}
                               </div>
@@ -278,21 +278,30 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                                   <span className="text-xs text-aviation-600 font-medium">Active</span>
                                 </div>
                               )}
+                              {activeTab !== item.id && (
+                                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                  <div className="flex items-center space-x-1">
+                                    <div className="w-1 h-1 bg-aviation-400 rounded-full"></div>
+                                    <div className="w-1 h-1 bg-aviation-400 rounded-full"></div>
+                                    <div className="w-1 h-1 bg-aviation-400 rounded-full"></div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                            <div className="text-xs text-slate-600 mt-0.5 group-hover:text-slate-700 transition-colors duration-200">
+                            <div className="text-xs text-slate-600 mt-0.5 group-hover:text-aviation-700 group-hover:font-medium transition-all duration-200">
                               {item.description}
                             </div>
                             <div className="flex items-center justify-between mt-2">
                               <div className="flex items-center space-x-1">
-                                <Clock className="h-3 w-3 text-slate-400" />
-                                <span className="text-xs text-slate-500">{item.stats}</span>
+                                <Clock className="h-3 w-3 text-slate-400 group-hover:text-aviation-500 transition-colors duration-200" />
+                                <span className="text-xs text-slate-500 group-hover:text-aviation-600 group-hover:font-medium transition-all duration-200">{item.stats}</span>
                               </div>
-                              <div className={`text-xs px-2 py-0.5 rounded-full ${
+                              <div className={`text-xs px-2 py-0.5 rounded-full transition-all duration-200 group-hover:shadow-soft group-hover:scale-105 ${
                                 item.status === 'operational' 
-                                  ? 'bg-success-100 text-success-700' 
+                                  ? 'bg-success-100 text-success-700 group-hover:bg-success-200 group-hover:text-success-800' 
                                   : item.status === 'warning'
-                                  ? 'bg-yellow-100 text-yellow-700'
-                                  : 'bg-red-100 text-red-700'
+                                  ? 'bg-yellow-100 text-yellow-700 group-hover:bg-yellow-200 group-hover:text-yellow-800'
+                                  : 'bg-red-100 text-red-700 group-hover:bg-red-200 group-hover:text-red-800'
                               }`}>
                                 {item.status}
                               </div>
@@ -303,13 +312,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                     })}
 
                     {/* Quick Actions Footer */}
-                    <div className="mx-4 mt-3 pt-3 border-t border-slate-200">
+                    <div className="mx-4 mt-3 pt-3 border-t border-slate-200 hover:border-aviation-300 transition-colors duration-200">
                       <div className="flex items-center justify-between text-xs">
-                        <div className="flex items-center space-x-2 text-slate-500">
+                        <div className="flex items-center space-x-2 text-slate-500 hover:text-aviation-600 transition-colors duration-200">
                           <Shield className="h-3 w-3" />
                           <span>All systems monitored</span>
                         </div>
-                        <div className="flex items-center space-x-1 text-success-600">
+                        <div className="flex items-center space-x-1 text-success-600 hover:text-success-700 transition-colors duration-200">
                           <Zap className="h-3 w-3" />
                           <span>Live data</span>
                         </div>
