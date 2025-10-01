@@ -166,6 +166,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
         return <div className="w-2 h-2 bg-slate-400 rounded-full"></div>;
     }
   };
+
   return (
     <nav className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-strong backdrop-blur-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -320,28 +321,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
             ))}
           </div>
         </div>
-                          }`} />
-                          <div>
-                            <div className={`font-medium ${
-                              activeTab === item.id ? 'text-aviation-900' : 'text-slate-900'
-                            }`}>
-                              {item.label}
-                            </div>
-                            <div className="text-xs text-slate-600 mt-0.5">
-                              {item.description}
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Mobile Navigation */}
+        {\/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="lg:hidden border-t border-slate-700/50 animate-slide-up">
             <div className="py-3 space-y-1">
@@ -359,7 +340,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                           onTabChange(item.id);
                           setIsMenuOpen(false);
                         }}
-                        className={`flex items-center space-x-3 w-full px-4 py-3 text-left text-sm transition-all duration-200 rounded-lg mx-2 ${
+                        className={\`flex items-center space-x-3 w-full px-4 py-3 text-left text-sm transition-all duration-200 rounded-lg mx-2 ${
                           activeTab === item.id
                             ? 'bg-aviation-600 text-white'
                             : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
