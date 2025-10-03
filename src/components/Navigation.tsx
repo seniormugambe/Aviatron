@@ -224,7 +224,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                   )}
                 </button>
               );
-            ))}
+            })}
           </div>
         </div>
 
@@ -272,7 +272,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                     )}
                   </button>
                 );
-              ))}
+              })}
             </div>
           </div>
         )}
