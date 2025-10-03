@@ -169,10 +169,24 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
     setActiveDropdown(sectionTitle);
   };
 
-  const handleDropdownLeave = () => {
+  const handleDropdownLeave = (sectionTitle: string) => {
     const timeout = setTimeout(() => {
       setActiveDropdown(null);
-    }, 150);
+    }, 300);
+    setDropdownTimeout(timeout);
+  };
+
+  const handleDropdownContentEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+  };
+
+  const handleDropdownContentLeave = () => {
+    const timeout = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 300);
     setDropdownTimeout(timeout);
   };
 
@@ -254,7 +268,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
               <div key={section.title} className="relative">
                 <button
                   onMouseEnter={() => handleDropdownEnter(section.title)}
-                  onMouseLeave={handleDropdownLeave}
+                  onMouseLeave={() => handleDropdownLeave(section.title)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     section.items.some(item => item.id === activeTab)
                       ? 'bg-aviation-600 text-white'
@@ -271,8 +285,8 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                 {activeDropdown === section.title && (
                   <div 
                     className="absolute top-full left-0 mt-1 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-strong border border-slate-200 dark:border-slate-600 py-3 z-50 animate-slide-up"
-                    onMouseEnter={() => handleDropdownEnter(section.title)}
-                    onMouseLeave={handleDropdownLeave}
+                    onMouseEnter={handleDropdownContentEnter}
+                    onMouseLeave={handleDropdownContentLeave}
                   >
                     {/* Section Header */}
                     <div className={`mx-4 mb-3 p-3 rounded-lg ${section.bgColor} dark:bg-slate-700 border-l-4 border-gradient-to-b ${section.color}`}>
@@ -290,6 +304,10 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
                           onClick={() => {
                             onTabChange(item.id);
                             setActiveDropdown(null);
+                            if (dropdownTimeout) {
+                              clearTimeout(dropdownTimeout);
+                              setDropdownTimeout(null);
+                            }
                           }}
                           className={`w-full flex items-start space-x-3 px-4 py-3 text-left hover:bg-gradient-to-r hover:from-slate-50 hover:to-aviation-50 dark:hover:from-slate-700 dark:hover:to-slate-600 hover:shadow-soft transition-all duration-300 group transform hover:scale-[1.02] hover:translate-x-1 ${
                             activeTab === item.id ? 'bg-aviation-50 dark:bg-slate-700 border-r-4 border-aviation-500' : ''
