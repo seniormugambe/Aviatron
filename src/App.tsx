@@ -6,6 +6,7 @@ import PassengerExperience from './components/PassengerExperience';
 import WeatherSafety from './components/WeatherSafety';
 import ADSBTracking from './components/ADSBTracking';
 import PredictiveAnalytics from './components/PredictiveAnalytics';
+import AIControlCenter from './components/AIControlCenter';
 import AirportManagement from './components/AirportManagement';
 import EmergencyResponse from './components/EmergencyResponse';
 import UserManagement from './components/UserManagement';
@@ -27,6 +28,8 @@ function App() {
         return <ADSBTracking />;
       case 'analytics':
         return <PredictiveAnalytics />;
+      case 'ai-systems':
+        return <AIControlCenter />;
       case 'airport':
         return <AirportManagement />;
       case 'emergency':

@@ -13,7 +13,8 @@ import {
   UserCheck,
   Activity,
   Moon,
-  Sun
+  Sun,
+  Brain
 } from 'lucide-react';
 
 interface NavigationProps {
@@ -92,6 +93,13 @@ const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }) => {
       label: 'Predictive Analytics', 
       icon: TrendingUp, 
       description: 'AI-powered insights',
+      status: 'operational'
+    },
+    { 
+      id: 'ai-systems', 
+      label: 'AI Control Center', 
+      icon: Brain, 
+      description: 'AI models and automation',
       status: 'operational'
     },
     { 
