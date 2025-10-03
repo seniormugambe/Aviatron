@@ -113,29 +113,186 @@ const ADSBTracking: React.FC = () => {
         </div>
 
         {/* Map Placeholder */}
-        <div className="bg-gray-50 rounded-lg p-6 mb-8">
+        <div className="bg-gray-50 dark:bg-slate-800 rounded-lg p-6 mb-8">
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Real-Time Flight Map</h3>
-          <div className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg h-96 flex items-center justify-center border-2 border-dashed border-blue-300">
-            <div className="text-center">
-              <MapPin className="h-16 w-16 text-blue-500 mx-auto mb-4" />
-              <h4 className="text-lg font-semibold text-blue-900 mb-2">Interactive Flight Map</h4>
-              <p className="text-blue-700 text-sm max-w-md">
-                Real-time visualization of aircraft positions, flight paths, and airspace coverage across Uganda and neighboring regions.
-              </p>
-              <div className="mt-4 flex justify-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <span className="text-xs text-blue-700">En Route</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-xs text-blue-700">Climbing</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <span className="text-xs text-blue-700">Descending</span>
+          <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-lg h-96 overflow-hidden border border-slate-300 dark:border-slate-600">
+            {/* Map Background Grid */}
+            <div className="absolute inset-0 opacity-20">
+              <svg className="w-full h-full" viewBox="0 0 400 300">
+                <defs>
+                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" className="text-slate-400 dark:text-slate-500" />
+              </svg>
+            </div>
+
+            {/* Uganda Map Outline */}
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 300">
+              <path
+                d="M120 80 L280 85 L285 120 L275 180 L250 220 L180 225 L140 200 L115 150 Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="5,5"
+                className="text-slate-400 dark:text-slate-500 animate-pulse"
+              />
+              <text x="200" y="155" textAnchor="middle" className="text-xs font-medium fill-slate-500 dark:fill-slate-400">
+                UGANDA
+              </text>
+            </svg>
+
+            {/* Airport Markers */}
+            <div className="absolute top-16 left-32">
+              <div className="relative group cursor-pointer">
+                <div className="w-3 h-3 bg-aviation-500 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Entebbe Intl (EBB)
                 </div>
               </div>
+            </div>
+            
+            <div className="absolute top-8 left-48">
+              <div className="relative group cursor-pointer">
+                <div className="w-2 h-2 bg-slate-500 rounded-full border border-white shadow"></div>
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Gulu Airport (ULU)
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-20 left-24">
+              <div className="relative group cursor-pointer">
+                <div className="w-2 h-2 bg-slate-500 rounded-full border border-white shadow"></div>
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Kasese Airstrip
+                </div>
+              </div>
+            </div>
+
+            {/* Aircraft Icons with Flight Paths */}
+            {/* UGA001 - En Route to Nairobi */}
+            <div className="absolute top-24 left-52 animate-pulse">
+              <div className="relative group cursor-pointer">
+                <div className="transform rotate-45">
+                  <Plane className="h-4 w-4 text-blue-600 drop-shadow-lg" />
+                </div>
+                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                  <div className="font-semibold">UGA001</div>
+                  <div>Boeing 737-800</div>
+                  <div>35,000 ft • 450 kts</div>
+                  <div>EBB → NBO</div>
+                </div>
+                {/* Flight path trail */}
+                <svg className="absolute -top-2 -left-16 w-20 h-8 pointer-events-none">
+                  <path
+                    d="M0 4 Q10 2 20 4"
+                    stroke="rgb(37 99 235)"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeDasharray="3,2"
+                    className="opacity-60"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* UGA002 - Climbing to Dubai */}
+            <div className="absolute top-20 left-36 animate-pulse" style={{ animationDelay: '0.5s' }}>
+              <div className="relative group cursor-pointer">
+                <div className="transform rotate-12">
+                  <Plane className="h-4 w-4 text-green-600 drop-shadow-lg" />
+                </div>
+                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                  <div className="font-semibold">UGA002</div>
+                  <div>Airbus A330</div>
+                  <div>37,000 ft • 480 kts</div>
+                  <div>EBB → DXB</div>
+                </div>
+                {/* Climbing indicator */}
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+              </div>
+            </div>
+
+            {/* UGA003 - Descending to Entebbe */}
+            <div className="absolute top-12 left-44 animate-pulse" style={{ animationDelay: '1s' }}>
+              <div className="relative group cursor-pointer">
+                <div className="transform rotate-180">
+                  <Plane className="h-3 w-3 text-yellow-600 drop-shadow-lg" />
+                </div>
+                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                  <div className="font-semibold">UGA003</div>
+                  <div>DHC-8-400</div>
+                  <div>15,000 ft • 280 kts</div>
+                  <div>ULU → EBB</div>
+                </div>
+                {/* Descending indicator */}
+                <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-yellow-500 rounded-full animate-ping"></div>
+              </div>
+            </div>
+
+            {/* Radar Coverage Circles */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+              <circle
+                cx="128"
+                cy="64"
+                r="60"
+                fill="none"
+                stroke="rgb(59 130 246)"
+                strokeWidth="1"
+                strokeDasharray="5,5"
+                className="opacity-30 animate-pulse"
+              />
+              <circle
+                cx="128"
+                cy="64"
+                r="40"
+                fill="none"
+                stroke="rgb(59 130 246)"
+                strokeWidth="1"
+                strokeDasharray="3,3"
+                className="opacity-40"
+              />
+            </svg>
+
+            {/* Map Controls */}
+            <div className="absolute top-4 right-4 flex flex-col space-y-2">
+              <button className="bg-white dark:bg-slate-700 p-2 rounded shadow-lg hover:shadow-xl transition-shadow border border-slate-200 dark:border-slate-600">
+                <span className="text-slate-600 dark:text-slate-300 text-xs font-medium">+</span>
+              </button>
+              <button className="bg-white dark:bg-slate-700 p-2 rounded shadow-lg hover:shadow-xl transition-shadow border border-slate-200 dark:border-slate-600">
+                <span className="text-slate-600 dark:text-slate-300 text-xs font-medium">−</span>
+              </button>
+            </div>
+
+            {/* Legend */}
+            <div className="absolute bottom-4 left-4 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-lg border border-slate-200 dark:border-slate-600">
+              <div className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Legend</div>
+              <div className="space-y-1">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-aviation-500 rounded-full"></div>
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Major Airport</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Plane className="h-3 w-3 text-blue-600" />
+                  <span className="text-xs text-slate-600 dark:text-slate-400">En Route</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Plane className="h-3 w-3 text-green-600" />
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Climbing</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Plane className="h-3 w-3 text-yellow-600" />
+                  <span className="text-xs text-slate-600 dark:text-slate-400">Descending</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Data Indicator */}
+            <div className="absolute top-4 left-4 flex items-center space-x-2 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-lg border border-slate-200 dark:border-slate-600">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Live ADS-B Data</span>
             </div>
           </div>
         </div>
